@@ -35,6 +35,14 @@ class VertexResults extends ConsumerWidget {
     if (xTwo < 0) {
       xTwoParse = xTwoParse.substring(1);
     }
+    String bParse = b.toString();
+    if (b < 0) {
+      bParse = bParse.substring(1);
+    }
+    String cParse = c.toString();
+    if (c < 0) {
+      cParse = cParse.substring(1);
+    }
 
     return Column(
       children: [
@@ -107,7 +115,7 @@ class VertexResults extends ConsumerWidget {
           height: 8,
         ),
         Text(
-          'Ogólna: f(x)=$aParse',
+          'Ogólna: f(x)=${aParse}x²${b < 0 ? '-' : '+'}${bParse}x${c < 0 ? '-' : '+'}$cParse',
           style: style,
         ),
         const SizedBox(

@@ -13,33 +13,26 @@ class FactoredResults extends ConsumerWidget {
     final function = ref.watch(quadraticFunctionProvider);
     final a = function.a;
     final aParse = double.tryParse(a ?? '') ?? 0;
-    final b = function.b;
-    final bParse = double.tryParse(b ?? '') ?? 0;
-    final c = function.c;
-    final cParse = double.tryParse(c ?? '') ?? 0;
-    final delta = FunctionHelper()
-        .solveDelta(a: aParse, b: bParse, c: cParse)
-        .roundToDouble();
-    final xOne = FunctionHelper()
-        .solveXOne(a: aParse, b: bParse, delta: delta)
-        .roundToDouble();
-    String xOneParse = xOne.toString();
-    if (xOne < 0) {
-      xOneParse = xOneParse.substring(1);
-    }
-    final xTwo = FunctionHelper()
-        .solveXTwo(a: aParse, b: bParse, delta: delta)
-        .roundToDouble();
-    String xTwoParse = xTwo.toString();
-    if (xTwo < 0) {
-      xTwoParse = xTwoParse.substring(1);
-    }
-    final p = FunctionHelper().solveP(a: aParse, b: bParse);
-    String pParse = p.toString();
-    if (p < 0) {
-      pParse = pParse.substring(1);
-    }
+    final xOne = function.xOne;
+    final xOneParse = double.tryParse(xOne ?? '') ?? 0;
+    final xTwo = function.xTwo;
+    final xTwoParse = double.tryParse(xTwo ?? '') ?? 0;
+    final b = FunctionHelper()
+        .solveBFactor(a: aParse, xOne: xOneParse, xTwo: xTwoParse);
+    final c = FunctionHelper()
+        .solveCFactor(a: aParse, xOne: xOneParse, xTwo: xTwoParse);
+    final delta =
+        FunctionHelper().solveDelta(a: aParse, b: b, c: c).roundToDouble();
+    final p = FunctionHelper().solveP(a: aParse, b: b);
     final q = FunctionHelper().solveQ(a: aParse, delta: delta);
+    String bParse = b.toString();
+    if (b < 0) {
+      bParse = bParse.substring(1);
+    }
+    String cParse = c.toString();
+    if (c < 0) {
+      cParse = cParse.substring(1);
+    }
     return Column(
       children: [
         FittedBox(
@@ -55,11 +48,11 @@ class FactoredResults extends ConsumerWidget {
                     style: style,
                   ),
                   Text(
-                    'x₁=$xOne',
+                    'b=$b',
                     style: style,
                   ),
                   Text(
-                    'x₂=$xTwo',
+                    'c=$c',
                     style: style,
                   ),
                   Text(
@@ -80,11 +73,11 @@ class FactoredResults extends ConsumerWidget {
                     style: style,
                   ),
                   Text(
-                    'wzór: x₁ = -b - √Δ / 2a',
+                    'wzór: b = -a(x₁+x₂)',
                     style: style,
                   ),
                   Text(
-                    'wzór: x₂ = -b + √Δ / 2a',
+                    'wzór: c = ax₁x₂',
                     style: style,
                   ),
                   Text(
@@ -111,14 +104,14 @@ class FactoredResults extends ConsumerWidget {
           height: 8,
         ),
         Text(
-          'Ogólna: f(x)=$aParse()',
+          'Ogólna: f(x)=${aParse}x²${b < 0 ? '-' : '+'}${bParse}x${c < 0 ? '-' : '+'}$cParse',
           style: style,
         ),
         const SizedBox(
           height: 12,
         ),
         Text(
-          'Kanoniczna: f(x)=$aParse(x${p < 0 ? '+' : '-'}$pParse)²${q < 0 ? '' : '+'}$q',
+          'Kanoniczna: f(x)=$aParse(x${p < 0 ? '+' : '-'}$p)²${q < 0 ? '' : '+'}$q',
           style: style,
         ),
       ],

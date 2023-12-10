@@ -46,4 +46,17 @@ class FunctionHelper {
     double c = a * pSquare + q;
     return c;
   }
+
+  double solveBFactor(
+      {required double a, required double xOne, required double xTwo}) {
+    double x = xOne + xTwo;
+    double b = -a * x;
+    return b;
+  }
+
+  double solveCFactor(
+      {required double a, required double xOne, required double xTwo}) {
+    double c = a * xOne * xTwo;
+    return c;
+  }
 }
