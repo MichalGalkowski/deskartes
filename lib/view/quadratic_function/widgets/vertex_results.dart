@@ -19,27 +19,22 @@ class VertexResults extends ConsumerWidget {
     final qParse = double.tryParse(q ?? '') ?? 0;
     final b = FunctionHelper().solveB(a: aParse, p: pParse);
     final c = FunctionHelper().solveC(a: aParse, p: pParse, q: qParse);
-    final delta =
-        FunctionHelper().solveDelta(a: aParse, b: b, c: c).roundToDouble();
-    final xOne = FunctionHelper()
-        .solveXOne(a: aParse, b: b, delta: delta)
-        .roundToDouble();
-    String xOneParse = xOne.toString();
+    final delta = FunctionHelper().solveDelta(a: aParse, b: b, c: c);
+    final xOne = FunctionHelper().solveXOne(a: aParse, b: b, delta: delta);
+    String xOneParse = xOne.toStringAsFixed(1);
     if (xOne < 0) {
       xOneParse = xOneParse.substring(1);
     }
-    final xTwo = FunctionHelper()
-        .solveXTwo(a: aParse, b: b, delta: delta)
-        .roundToDouble();
-    String xTwoParse = xTwo.toString();
+    final xTwo = FunctionHelper().solveXTwo(a: aParse, b: b, delta: delta);
+    String xTwoParse = xTwo.toStringAsFixed(1);
     if (xTwo < 0) {
       xTwoParse = xTwoParse.substring(1);
     }
-    String bParse = b.toString();
+    String bParse = b.toStringAsFixed(1);
     if (b < 0) {
       bParse = bParse.substring(1);
     }
-    String cParse = c.toString();
+    String cParse = c.toStringAsFixed(1);
     if (c < 0) {
       cParse = cParse.substring(1);
     }
@@ -55,23 +50,23 @@ class VertexResults extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Delta=$delta',
+                    'Delta=${delta.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'x₁=$xOne',
+                    'x₁=${xOne.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'x₂=$xTwo',
+                    'x₂=${xTwo.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'b=$b',
+                    'b=${b.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'c=$c',
+                    'c=${c.toStringAsFixed(1)}',
                     style: style,
                   ),
                 ],
@@ -122,7 +117,7 @@ class VertexResults extends ConsumerWidget {
           height: 12,
         ),
         Text(
-          'Iloczynowa: f(x)=$aParse(x${xOne < 0 ? '+' : '-'}$xOneParse)(x${xTwo < 0 ? '+' : '-'}$xTwoParse)',
+          'Iloczynowa: f(x)=${aParse.toStringAsFixed(1)}(x${xOne < 0 ? '+' : '-'}$xOneParse)(x${xTwo < 0 ? '+' : '-'}$xTwoParse)',
           style: style,
         ),
       ],

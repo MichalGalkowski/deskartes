@@ -17,25 +17,19 @@ class StandardResults extends ConsumerWidget {
     final bParse = double.tryParse(b ?? '') ?? 0;
     final c = function.c;
     final cParse = double.tryParse(c ?? '') ?? 0;
-    final delta = FunctionHelper()
-        .solveDelta(a: aParse, b: bParse, c: cParse)
-        .roundToDouble();
-    final xOne = FunctionHelper()
-        .solveXOne(a: aParse, b: bParse, delta: delta)
-        .roundToDouble();
-    String xOneParse = xOne.toString();
+    final delta = FunctionHelper().solveDelta(a: aParse, b: bParse, c: cParse);
+    final xOne = FunctionHelper().solveXOne(a: aParse, b: bParse, delta: delta);
+    String xOneParse = xOne.toStringAsFixed(1);
     if (xOne < 0) {
       xOneParse = xOneParse.substring(1);
     }
-    final xTwo = FunctionHelper()
-        .solveXTwo(a: aParse, b: bParse, delta: delta)
-        .roundToDouble();
-    String xTwoParse = xTwo.toString();
+    final xTwo = FunctionHelper().solveXTwo(a: aParse, b: bParse, delta: delta);
+    String xTwoParse = xTwo.toStringAsFixed(1);
     if (xTwo < 0) {
       xTwoParse = xTwoParse.substring(1);
     }
     final p = FunctionHelper().solveP(a: aParse, b: bParse);
-    String pParse = p.toString();
+    String pParse = p.toStringAsFixed(1);
     if (p < 0) {
       pParse = pParse.substring(1);
     }
@@ -51,23 +45,23 @@ class StandardResults extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Delta=$delta',
+                    'Delta=${delta.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'x₁=$xOne',
+                    'x₁=${xOne.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'x₂=$xTwo',
+                    'x₂=${xTwo.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'p=$p',
+                    'p=${p.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'q=$q',
+                    'q=${q.toStringAsFixed(1)}',
                     style: style,
                   ),
                 ],
@@ -111,14 +105,14 @@ class StandardResults extends ConsumerWidget {
           height: 8,
         ),
         Text(
-          'Kanoniczna: f(x)=$aParse(x${p < 0 ? '+' : '-'}$pParse)²${q < 0 ? '' : '+'}$q',
+          'Kanoniczna: f(x)=${aParse.toStringAsFixed(1)}(x${p < 0 ? '+' : '-'}$pParse)²${q < 0 ? '' : '+'}${q.toStringAsFixed(1)}',
           style: style,
         ),
         const SizedBox(
           height: 12,
         ),
         Text(
-          'Iloczynowa: f(x)=$aParse(x${xOne < 0 ? '+' : '-'}$xOneParse)(x${xTwo < 0 ? '+' : '-'}$xTwoParse)',
+          'Iloczynowa: f(x)=${aParse.toStringAsFixed(1)}(x${xOne < 0 ? '+' : '-'}$xOneParse)(x${xTwo < 0 ? '+' : '-'}$xTwoParse)',
           style: style,
         ),
       ],

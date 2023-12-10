@@ -21,15 +21,14 @@ class FactoredResults extends ConsumerWidget {
         .solveBFactor(a: aParse, xOne: xOneParse, xTwo: xTwoParse);
     final c = FunctionHelper()
         .solveCFactor(a: aParse, xOne: xOneParse, xTwo: xTwoParse);
-    final delta =
-        FunctionHelper().solveDelta(a: aParse, b: b, c: c).roundToDouble();
+    final delta = FunctionHelper().solveDelta(a: aParse, b: b, c: c);
     final p = FunctionHelper().solveP(a: aParse, b: b);
     final q = FunctionHelper().solveQ(a: aParse, delta: delta);
-    String bParse = b.toString();
+    String bParse = b.toStringAsFixed(1);
     if (b < 0) {
       bParse = bParse.substring(1);
     }
-    String cParse = c.toString();
+    String cParse = c.toStringAsFixed(1);
     if (c < 0) {
       cParse = cParse.substring(1);
     }
@@ -44,23 +43,23 @@ class FactoredResults extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Delta=$delta',
+                    'Delta=${delta.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'b=$b',
+                    'b=${b.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'c=$c',
+                    'c=${c.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'p=$p',
+                    'p=${p.toStringAsFixed(1)}',
                     style: style,
                   ),
                   Text(
-                    'q=$q',
+                    'q=${q.toStringAsFixed(1)}',
                     style: style,
                   ),
                 ],
@@ -104,14 +103,14 @@ class FactoredResults extends ConsumerWidget {
           height: 8,
         ),
         Text(
-          'Ogólna: f(x)=${aParse}x²${b < 0 ? '-' : '+'}${bParse}x${c < 0 ? '-' : '+'}$cParse',
+          'Ogólna: f(x)=${aParse.toStringAsFixed(1)}x²${b < 0 ? '-' : '+'}${bParse}x${c < 0 ? '-' : '+'}$cParse',
           style: style,
         ),
         const SizedBox(
           height: 12,
         ),
         Text(
-          'Kanoniczna: f(x)=$aParse(x${p < 0 ? '+' : '-'}$p)²${q < 0 ? '' : '+'}$q',
+          'Kanoniczna: f(x)=${aParse.toStringAsFixed(1)}(x${p < 0 ? '+' : '-'}${p.toStringAsFixed(1)})²${q < 0 ? '' : '+'}${q.toStringAsFixed(1)}',
           style: style,
         ),
       ],

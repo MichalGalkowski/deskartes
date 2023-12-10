@@ -1,3 +1,4 @@
+import 'package:deskartes/view/quadratic_function/widgets/forms/parabola.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,6 +39,7 @@ class Graph extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20), color: Colors.black12),
       child: Stack(
         children: [
+          const Parabola(),
           // x axis points
           Padding(
             padding: EdgeInsets.only(top: width * .474),
