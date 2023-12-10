@@ -1,5 +1,6 @@
 import 'package:deskartes/providers/quadratic_provider.dart';
 import 'package:deskartes/view/quadratic_function/widgets/factored_results.dart';
+import 'package:deskartes/view/quadratic_function/widgets/graph.dart';
 import 'package:deskartes/view/quadratic_function/widgets/standard_results.dart';
 import 'package:deskartes/view/quadratic_function/widgets/select_form.dart';
 import 'package:deskartes/view/quadratic_function/widgets/variable_form.dart';
@@ -33,20 +34,23 @@ class QuadraticScreen extends ConsumerWidget {
         title: const Text('Funkcja kwadratowa'),
         centerTitle: true,
       ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.0),
-          child: SelectForm(),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.0),
-          child: VariableForm(),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0),
-          child: conditionalWidget(),
-        ),
-      ]),
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0),
+            child: SelectForm(),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0),
+            child: VariableForm(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: conditionalWidget(),
+          ),
+          const Graph(),
+        ]),
+      ),
     );
   }
 }
