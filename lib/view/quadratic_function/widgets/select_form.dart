@@ -9,7 +9,10 @@ class SelectForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quadraticFunction = ref.watch(quadraticFunctionProvider);
     final quadraticForm = ref.watch(quadraticFunctionProvider).form;
-    final a = quadraticFunction.a;
+    String? a = quadraticFunction.a;
+    if (a == '0' || a == '1') {
+      a = '';
+    }
     final b = quadraticFunction.b;
     final bParse = double.tryParse(b ?? '') ?? 0;
     final c = quadraticFunction.c;

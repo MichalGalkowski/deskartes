@@ -1,4 +1,4 @@
-import 'package:deskartes/view/quadratic_function/widgets/forms/parabola.dart';
+import 'package:deskartes/view/quadratic_function/widgets/arc_canvas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,7 +39,6 @@ class Graph extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20), color: Colors.black12),
       child: Stack(
         children: [
-          const Parabola(),
           // x axis points
           Padding(
             padding: EdgeInsets.only(top: width * .474),
@@ -75,6 +74,7 @@ class Graph extends ConsumerWidget {
               width: 20,
               child: ListView.builder(
                   itemCount: numbers.length,
+                  reverse: true,
                   scrollDirection: Axis.vertical,
                   itemBuilder: ((context, index) {
                     return Container(
@@ -112,6 +112,7 @@ class Graph extends ConsumerWidget {
                 border:
                     Border(right: BorderSide(color: Colors.black, width: 1.6))),
           ),
+          const ArcCanvas(),
         ],
       ),
     );

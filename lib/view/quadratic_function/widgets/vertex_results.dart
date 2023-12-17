@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../helpers/function_helper.dart';
+import '../../../models/quadratic_function.dart';
 
 class VertexResults extends ConsumerWidget {
   const VertexResults({super.key});
@@ -11,8 +12,11 @@ class VertexResults extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     TextStyle style = const TextStyle(fontSize: 20);
     final function = ref.watch(quadraticFunctionProvider);
-    final a = function.a;
-    final aParse = double.tryParse(a ?? '') ?? 0;
+    String? a = function.a;
+    if (a == '0') {
+      a = '1';
+    }
+    final aParse = double.tryParse(a ?? '1') ?? 1;
     final p = function.p;
     final pParse = double.tryParse(p ?? '') ?? 0;
     final q = function.q;
@@ -39,6 +43,15 @@ class VertexResults extends ConsumerWidget {
       cParse = cParse.substring(1);
     }
 
+    final updatedFunction = QuadraticFunction(
+        function.form,
+        function.a,
+        b.toStringAsFixed(1),
+        c.toStringAsFixed(1),
+        p,
+        q,
+        xOne.toStringAsFixed(1),
+        xTwo.toStringAsFixed(1));
     return Column(
       children: [
         FittedBox(
@@ -120,6 +133,14 @@ class VertexResults extends ConsumerWidget {
           'Iloczynowa: f(x)=${aParse.toStringAsFixed(1)}(x${xOne < 0 ? '+' : '-'}$xOneParse)(x${xTwo < 0 ? '+' : '-'}$xTwoParse)',
           style: style,
         ),
+        const SizedBox(
+          height: 12,
+        ),
+        OutlinedButton(
+            onPressed: () => ref
+                .read(quadraticFunctionProvider.notifier)
+                .setFunction(updatedFunction),
+            child: const Text('Pokaż na osi')),
       ],
     );
   }

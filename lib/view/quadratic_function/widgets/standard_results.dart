@@ -1,3 +1,4 @@
+import 'package:deskartes/models/quadratic_function.dart';
 import 'package:deskartes/providers/quadratic_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,8 +12,11 @@ class StandardResults extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     TextStyle style = const TextStyle(fontSize: 20);
     final function = ref.watch(quadraticFunctionProvider);
-    final a = function.a;
-    final aParse = double.tryParse(a ?? '') ?? 0;
+    String? a = function.a;
+    if (a == '0') {
+      a = '1';
+    }
+    final aParse = double.tryParse(a ?? '1') ?? 1;
     final b = function.b;
     final bParse = double.tryParse(b ?? '') ?? 0;
     final c = function.c;
@@ -34,6 +38,16 @@ class StandardResults extends ConsumerWidget {
       pParse = pParse.substring(1);
     }
     final q = FunctionHelper().solveQ(a: aParse, delta: delta);
+    final updatedFunction = QuadraticFunction(
+        function.form,
+        function.a,
+        function.b,
+        function.c,
+        p.toStringAsFixed(1),
+        q.toStringAsFixed(1),
+        xOne.toStringAsFixed(1),
+        xTwo.toStringAsFixed(1));
+
     return Column(
       children: [
         FittedBox(
@@ -115,6 +129,14 @@ class StandardResults extends ConsumerWidget {
           'Iloczynowa: f(x)=${aParse.toStringAsFixed(1)}(x${xOne < 0 ? '+' : '-'}$xOneParse)(x${xTwo < 0 ? '+' : '-'}$xTwoParse)',
           style: style,
         ),
+        const SizedBox(
+          height: 12,
+        ),
+        OutlinedButton(
+            onPressed: () => ref
+                .read(quadraticFunctionProvider.notifier)
+                .setFunction(updatedFunction),
+            child: const Text('Pokaż na osi')),
       ],
     );
   }

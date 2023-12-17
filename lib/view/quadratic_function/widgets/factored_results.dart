@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../helpers/function_helper.dart';
+import '../../../models/quadratic_function.dart';
 
 class FactoredResults extends ConsumerWidget {
   const FactoredResults({super.key});
@@ -11,8 +12,11 @@ class FactoredResults extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     TextStyle style = const TextStyle(fontSize: 20);
     final function = ref.watch(quadraticFunctionProvider);
-    final a = function.a;
-    final aParse = double.tryParse(a ?? '') ?? 0;
+    String? a = function.a;
+    if (a == '0') {
+      a = '1';
+    }
+    final aParse = double.tryParse(a ?? '1') ?? 1;
     final xOne = function.xOne;
     final xOneParse = double.tryParse(xOne ?? '') ?? 0;
     final xTwo = function.xTwo;
@@ -32,6 +36,16 @@ class FactoredResults extends ConsumerWidget {
     if (c < 0) {
       cParse = cParse.substring(1);
     }
+
+    final updatedFunction = QuadraticFunction(
+        function.form,
+        function.a,
+        b.toStringAsFixed(1),
+        c.toStringAsFixed(1),
+        p.toStringAsFixed(1),
+        q.toStringAsFixed(1),
+        xOne,
+        xTwo);
     return Column(
       children: [
         FittedBox(
@@ -113,6 +127,14 @@ class FactoredResults extends ConsumerWidget {
           'Kanoniczna: f(x)=${aParse.toStringAsFixed(1)}(x${p < 0 ? '+' : '-'}${p.toStringAsFixed(1)})²${q < 0 ? '' : '+'}${q.toStringAsFixed(1)}',
           style: style,
         ),
+        const SizedBox(
+          height: 12,
+        ),
+        OutlinedButton(
+            onPressed: () => ref
+                .read(quadraticFunctionProvider.notifier)
+                .setFunction(updatedFunction),
+            child: const Text('Pokaż na osi')),
       ],
     );
   }
